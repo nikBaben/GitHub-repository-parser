@@ -3,14 +3,16 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
 
-from value_objects import CommitsHistoryPoint
-from value_objects import ContributorsHistoryPoint
-from value_objects import ForksHistoryPoint
-from value_objects import PullsHistoryPoint
-from value_objects import MergedPullsHistoryPoint
-from value_objects import IssuesHistoryPoint
-from value_objects import StarsHistoryPoint
-from value_objects import WatchersHistoryPoint
+from value_objects import(
+    CommitsHistoryPoint, 
+    ContributorsHistoryPoint,
+    ForksHistoryPoint,
+    PullsHistoryPoint,
+    MergedPullsHistoryPoint,
+    IssuesHistoryPoint, 
+    StarsHistoryPoint,
+    WatchersHistoryPoint
+)
 
 
 Point = TypeVar("Point", bound=BaseModel)
