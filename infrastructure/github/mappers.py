@@ -35,6 +35,12 @@ def build_history(
     repo: str,
     points: list[TPoint],
 ) -> THistory:
+    """
+    Создаёт доменную сущность истории (History) из набора точек.
+
+    Универсальный билдер для всех типов историй, устанавливает owner,
+    repo, точки и время генерации.
+    """
     return history_cls(
         owner=owner,
         repo=repo,
@@ -48,6 +54,12 @@ def build_history_points(
     point_factory: Callable[[datetime], TPoint],
     sort_key: Callable[[TPoint], Any],
 ) -> list[TPoint]:
+    """
+    Преобразует список сырых данных GitHub API в список точек истории.
+
+    Для каждого элемента извлекается дата создания, создаётся точка через
+    point_factory и затем весь список сортируется.
+    """
     points: list[TPoint] = []
 
     for item in items:
@@ -62,6 +74,7 @@ def build_history_points(
 
 
 def map_github_repository_to_domain(data: dict[str, Any]) -> Repository:
+    """Преобразует ответ GitHub API в доменную сущность Repository."""
     return Repository(
         name=data["name"],
         owner_login=data["owner"]["login"],
@@ -79,6 +92,7 @@ def map_github_forks_to_domain(
     repo: str,
     forks: list[dict[str, Any]],
 ) -> ForksHistory:
+    """Преобразует список форков GitHub API в историю форков."""
     points = build_history_points(
         items=forks,
         point_factory=lambda created_dt: ForksHistoryPoint(
@@ -100,6 +114,7 @@ def map_github_pulls_to_domain(
     repo: str,
     pulls: list[dict[str, Any]],
 ) -> PullsHistory:
+    """Преобразует список pull request'ов в историю PR."""
     points = build_history_points(
         items=pulls,
         point_factory=lambda created_dt: PullsHistoryPoint(
@@ -121,6 +136,7 @@ def map_github_commits_to_domain(
     repo: str,
     commits: list[dict[str, Any]],
 ) -> CommitsHistory:
+    """Преобразует список коммитов GitHub API в историю коммитов."""
     points = build_history_points(
         items=commits,
         point_factory=lambda created_dt: CommitsHistoryPoint(
@@ -142,6 +158,7 @@ def map_github_stars_to_domain(
     repo: str, 
     stars: list[dict[str, Any]],
 ) -> StarsHistory: 
+    """Преобразует список звёзд GitHub API в историю stars."""
     points = build_history_points(
         items=stars,
         point_factory=lambda created_dt: StarsHistoryPoint(
@@ -163,6 +180,10 @@ def map_github_merged_pulls_to_domain(
     repo: str, 
     merged_pulls: list[dict[str, Any]],
 ) -> MergedPullsHistory: 
+    """
+    Преобразует список pull request'ов в историю смёрженных PR.
+    Учитывает только pull request'ы с заполненным полем merged_at.
+    """
     points: list[MergedPullsHistoryPoint] = []
     for item in merged_pulls:
         merged_at_raw = item.get("merged_at")
@@ -186,6 +207,10 @@ def map_github_issues_to_domain(
     repo: str, 
     issues: list[dict[str, Any]],
 ) -> IssuesHistory: 
+    """
+    Преобразует список issues GitHub API в историю issues.
+    Исключает элементы, являющиеся pull request'ами.
+    """
     pure_issues = [
         item
         for item in issues
@@ -213,6 +238,10 @@ def map_github_contributors_to_domain(
     repo: str, 
     stars: list[dict[str, Any]],
 ) -> ContributorsHistory: 
+    """
+    Преобразует список данных в историю contributors.
+    Использует даты событий для формирования точек истории.
+    """
     points = build_history_points(
         items=stars,
         point_factory=lambda created_dt: ContributorsHistoryPoint(
@@ -230,6 +259,7 @@ def map_github_contributors_to_domain(
 
 
 def _author_key(commit: dict[str, Any]) -> str | None:
+    """Формирует уникальный идентификатор автора коммита."""
     author = commit.get("author") or {}
     if isinstance(author, dict) and author.get("login"):
         return f"login:{author['login']}"
@@ -249,7 +279,13 @@ def map_github_commits_to_contributors_history(
     repo: str,
     commits: list[dict[str, Any]],
 ) -> ContributorsHistory:
-    # key -> earliest contribution datetime
+    """
+    Строит историю появления contributors на основе коммитов.
+
+    Для каждого автора определяется дата его первого коммита,
+    после чего формируется история появления участников.
+    """
+    # ключ -> дата самого раннего вклада
     first_seen_by_author: dict[str, datetime] = {}
 
     for item in commits:
