@@ -1,2 +1,2 @@
-# GitHub-Repository-Parser
+# Repository-Parser
 GitHub Repository Parser
