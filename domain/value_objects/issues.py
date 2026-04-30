@@ -12,6 +12,11 @@ class Issues(BaseModel):
     issues: int = Field(ge=0) 
 
 
+class OpenIssues(BaseModel):
+    """Модель объекта-значения открытых ишьюсов."""
+    open_issues: int = Field(ge=0) 
+
+
 class IssuesHistoryPoint(BaseModel):
     """Модель объекта-значения истории ишьюсов."""
     issued_at: datetime
