@@ -1,8 +1,16 @@
 from typing import Any
 
-from infrastructure.github.clients.base import BaseHttpClient
 from config import settings
-from utils.datetime_utils import parse_dt
+from infrastructure.github.clients.base import BaseHttpClient
+from infrastructure.github.endpoints import (
+    repository_url,
+    stargazers_url,
+    commits_url,
+    contributors_url, 
+    pulls_url, 
+    forks_url,
+    issues_url
+)
 from infrastructure.github.queries import (
     ContributorsQuery,
     ForksQuery,
@@ -13,6 +21,7 @@ from infrastructure.github.queries import (
     GitHubPaginatedQuery,
     default_github_headers,
 )
+from utils.datetime_utils import parse_dt
 
 class GitHubClient(BaseHttpClient):
     """Асинхронный HTTP-клиент для работы с GitHub REST API."""
@@ -105,7 +114,7 @@ class GitHubClient(BaseHttpClient):
     ) -> tuple[dict[str, Any], dict[str, str]]:
         """Получает основную информацию о GitHub-репозитории."""
         return await self.get_json(
-            f"{settings.GITHUB_API_URL}/repos/{owner}/{repo}",
+            repository_url(owner,repo),
             headers=default_github_headers(),
         )
     
@@ -117,7 +126,7 @@ class GitHubClient(BaseHttpClient):
     ) -> list[dict[str, Any]]:
         """Получает историю пользователей, поставивших звезду репозиторию."""
         return await self._paginate(
-            f"{settings.GITHUB_API_URL}/repos/{owner}/{repo}/stargazers",
+            stargazers_url(owner,repo),
             query=query,
         )
 
@@ -129,7 +138,7 @@ class GitHubClient(BaseHttpClient):
     ) -> list[dict[str, Any]]:
         """Получает список форков репозитория."""
         return await self._paginate(
-            f"{settings.GITHUB_API_URL}/repos/{owner}/{repo}/forks",
+            forks_url(owner,repo),
             query=query,
         )
     
@@ -141,7 +150,7 @@ class GitHubClient(BaseHttpClient):
     ) -> list[dict[str, Any]]:
         """Получает список пуллов репозитория."""
         return await self._paginate(
-            f"{settings.GITHUB_API_URL}/repos/{owner}/{repo}/pulls",
+            pulls_url(owner,repo),
             query=query,
         )
     
@@ -153,7 +162,7 @@ class GitHubClient(BaseHttpClient):
     ) -> list[dict[str, Any]]:
         """Получает список коммитов репозитория."""
         return await self._paginate(
-            f"{settings.GITHUB_API_URL}/repos/{owner}/{repo}/commits",
+            commits_url(owner,repo),
             query=query,
         )
 
@@ -165,7 +174,7 @@ class GitHubClient(BaseHttpClient):
     ) -> list[dict[str, Any]]:
         """Получает список контрибьюторов репозитория."""
         return await self._paginate(
-            f"{settings.GITHUB_API_URL}/repos/{owner}/{repo}/contributors",
+            contributors_url(owner,repo),
             query=query or ContributorsQuery(),
         )
 
@@ -177,7 +186,7 @@ class GitHubClient(BaseHttpClient):
     ) -> list[dict[str, Any]]:
         """ Получает список ишьюсов репозитория."""
         return await self._paginate(
-            f"{settings.GITHUB_API_URL}/repos/{owner}/{repo}/issues",
+            issues_url(owner,repo),
             query=query,
         )
     
