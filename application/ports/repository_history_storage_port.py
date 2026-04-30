@@ -4,9 +4,9 @@ from application.dto import CachedHistoryDTO
 from application.queries.queries import GetHistoryQuery
 
 
-class HistoryStoragePort(Protocol):
+class RepositoryHistoryStoragePort(Protocol):
     """Порт для работы с хранилищем кэша исторических данных репозитория."""
-    
+
     def save(self, query: GetHistoryQuery, cached: CachedHistoryDTO) -> None:
         """Сохраняет кэшированные данные для заданного запроса."""
         ...
