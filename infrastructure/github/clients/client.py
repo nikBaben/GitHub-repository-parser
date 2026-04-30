@@ -21,7 +21,7 @@ from infrastructure.github.queries import (
     GitHubPaginatedQuery,
     default_github_headers,
 )
-from utils.datetime_utils import parse_dt
+from utils import parse_dt
 
 class GitHubClient(BaseHttpClient):
     """Асинхронный HTTP-клиент для работы с GitHub REST API."""
