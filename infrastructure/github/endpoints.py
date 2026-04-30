@@ -1,4 +1,4 @@
-from config import settings
+from infrastructure.github.config import settings
 
 
 def repository_url(owner: str, repo: str) -> str:

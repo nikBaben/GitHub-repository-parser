@@ -22,7 +22,7 @@ from domain.value_objects import (
     IssuesHistoryPoint, 
     ContributorsHistoryPoint
 )
-from utils import parse_dt, normalize_created_at
+from .utils import parse_dt, normalize_created_at
 
 
 TPoint = TypeVar("TPoint")

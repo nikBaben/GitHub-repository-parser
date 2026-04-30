@@ -1,6 +1,6 @@
 import asyncio
 
-from infrastructure.config import settings
+from infrastructure.github.config import settings
 from infrastructure.github.clients.client import GitHubClient
 from infrastructure.di.container import AppContainer
 from application.queries.queries import GetHistoryQuery

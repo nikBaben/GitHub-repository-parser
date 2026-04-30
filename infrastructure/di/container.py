@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
 
-from config import settings
+from infrastructure.github.config import settings
 from infrastructure.github.clients.client import GitHubClient
 from infrastructure.adapters import (
     GitHubRepositoryHistoryAdapter,

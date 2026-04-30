@@ -1,6 +1,6 @@
 from typing import Any
 
-from config import settings
+from infrastructure.github.config import settings
 from infrastructure.github.clients.base import BaseHttpClient
 from infrastructure.github.endpoints import (
     repository_url,
@@ -21,7 +21,7 @@ from infrastructure.github.queries import (
     GitHubPaginatedQuery,
     default_github_headers,
 )
-from utils import parse_dt
+from infrastructure.github.utils import parse_dt
 
 
 class GitHubClient(BaseHttpClient):

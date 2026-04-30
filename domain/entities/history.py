@@ -3,7 +3,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
 
-from value_objects import(
+from domain.value_objects import(
     CommitsHistoryPoint, 
     ContributorsHistoryPoint,
     ForksHistoryPoint,
