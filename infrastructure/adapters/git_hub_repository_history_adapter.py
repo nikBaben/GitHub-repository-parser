@@ -21,9 +21,8 @@ from infrastructure.github.queries import (
     Direction,
     DatePriority,
 )
-
 from infrastructure.github.clients.client import GitHubClient
-from infrastructure.github.mappers.github_history import (
+from infrastructure.github.mappers import (
     map_github_repository_to_domain,
     map_github_forks_to_domain,
     map_github_pulls_to_domain, 
