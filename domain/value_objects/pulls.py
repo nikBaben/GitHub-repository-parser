@@ -12,6 +12,11 @@ class Pulls(BaseModel):
     pulls: int = Field(ge=0)
 
 
+class MergedPulls(BaseModel):
+    """Модель объекта-значения мерджет пуллов."""
+    merged_pulls: int = Field(ge=0)
+
+
 class PullsHistoryPoint(BaseModel):
     """Модель объекта-значения для истории пуллов."""
     pulled_at: datetime
@@ -19,7 +24,9 @@ class PullsHistoryPoint(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
+class MergedPullsHistoryPoint(BaseModel):
+    """Модель объекта-значения для истории мерджет пуллов."""
+    merged_at: datetime
 
-
-
+    model_config = ConfigDict(frozen=True)
 
