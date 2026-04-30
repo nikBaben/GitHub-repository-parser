@@ -13,7 +13,7 @@ class Contributors(BaseModel):
 
 
 class ContributorsHistoryPoint(BaseModel):
-    """Модель объекта-значения для истории контрибьюторов."""
+    """Модель объекта-значения истории контрибьюторов."""
     contirbuted_at: datetime
     
     model_config = ConfigDict(frozen=True)

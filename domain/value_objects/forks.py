@@ -13,7 +13,7 @@ class Forks(BaseModel):
 
 
 class ForksHistoryPoint(BaseModel):
-    """Модель объекта-значения для истории форков."""
+    """Модель объекта-значения истории форков."""
     forked_at: datetime
 
     model_config = ConfigDict(frozen=True)

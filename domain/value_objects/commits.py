@@ -13,7 +13,7 @@ class Commits(BaseModel):
 
 
 class CommitsHistoryPoint(BaseModel):
-    """Модель объекта-значения для истории коммитов."""
+    """Модель объекта-значения истории коммитов."""
     committed_at: datetime
     
     model_config = ConfigDict(frozen=True)

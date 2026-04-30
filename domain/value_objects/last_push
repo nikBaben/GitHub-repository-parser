@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class LastPush(BaseModel):
-    """Модель обекта-значения для последнего пуша."""
+    """Модель обекта-значения последнего пуша."""
     last_push: datetime
 
 

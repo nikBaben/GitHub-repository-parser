@@ -13,7 +13,7 @@ class Stars(BaseModel):
 
 
 class StarsHistoryPoint(BaseModel):
-    """Модель объекта-значения для истории звезд."""
+    """Модель объекта-значения истории звезд."""
     starred_at: datetime
 
     model_config = ConfigDict(frozen=True)
