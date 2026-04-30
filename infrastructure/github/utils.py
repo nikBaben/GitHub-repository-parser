@@ -1,5 +1,6 @@
 from typing import Any
 from datetime import datetime, timezone
+from urllib.parse import urlparse
 
 
 # Приоритет полей даты для разных типов GitHub сущностей
@@ -69,3 +70,22 @@ def normalize_created_at(item: dict[str, Any]) -> dict[str, Any]:
         "created_dt": to_dt_utc(raw_date),   # datetime объект
         "raw": item,
     }
+
+
+def parse_github_url(url: str) -> tuple[str, str]:
+    """Извлекает owner и repo из URL GitHub-репозитория."""
+    if url.startswith("git@github.com:"):
+        path = url.split("git@github.com:", 1)[1]
+    else:
+        parsed = urlparse(url)
+        if parsed.netloc not in ("github.com", "www.github.com"):
+            raise ValueError("Not github.com URL")
+        path = parsed.path.lstrip("/")
+
+    path = path.removesuffix(".git").strip("/")
+    parts = path.split("/")
+
+    if len(parts) < 2:
+        raise ValueError("URL must contain owner/repo")
+
+    return parts[0], parts[1]
