@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class Repository(BaseModel):
-    """Модель сущности репозитория"""
+    """Модель сущности репозитория."""
     name: str
     owner_login: str
     stars: int
