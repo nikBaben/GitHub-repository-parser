@@ -8,6 +8,10 @@ from config import settings
 
 class BaseHttpClient:
     def __init__(self) -> None:
+        """
+        Базовый асинхронный HTTP-клиент 
+        для выполнения запросов к внешним API.
+        """
         self._client = httpx.AsyncClient()
 
     async def close(self) -> None:
@@ -27,6 +31,12 @@ class BaseHttpClient:
         retries: int = settings.DEFAULT_RETRIES,
         timeout: int = settings.DEFAULT_TIMEOUT,
     ) -> tuple[Any, dict[str, str]]:
+        """
+        Выполняет GET-запрос и возвращает JSON-ответ с заголовками.
+
+        Поддерживает повторные попытки (retries) при возникновении
+        secondary rate limit (HTTP 403), с линейной задержкой между попытками.
+        """
         for attempt in range(retries):
             response = await self._client.get(
                 url,
