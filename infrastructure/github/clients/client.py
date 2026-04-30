@@ -23,6 +23,7 @@ from infrastructure.github.queries import (
 )
 from utils import parse_dt
 
+
 class GitHubClient(BaseHttpClient):
     """Асинхронный HTTP-клиент для работы с GitHub REST API."""
     def __init__(self, token: str) -> None:
