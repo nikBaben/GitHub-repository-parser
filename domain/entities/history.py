@@ -54,7 +54,7 @@ ForksHistory = History[ForksHistoryPoint]
 PullsHistory = History[PullsHistoryPoint]
 """Модель сущности истории изменения количества пуллов репозитория."""
 
-MergedPullsHitory = History[MergedPullsHistoryPoint]
+MergedPullsHistory = History[MergedPullsHistoryPoint]
 """Модель сущности истории изменения количества мерджет пуллов репозитория."""
 
 IssuesHistory = History[IssuesHistoryPoint]

@@ -6,6 +6,6 @@ from .history import (
     CommitsHistory, 
     ForksHistory, 
     PullsHistory, 
-    MergedPullsHitory,
+    MergedPullsHistory,
     IssuesHistory
 )
