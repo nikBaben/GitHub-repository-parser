@@ -3,19 +3,6 @@ from pydantic import (
     Field,
     field_validator
 )
-from domain.value_objects import (
-    Archived,
-    Commits,
-    Contributors,
-    Forks,
-    Issues,
-    OpenIssues,
-    LastPush,
-    Pulls,
-    MergedPulls,
-    Stars,
-    Watchers,
-)
 
 
 class PopularityScore(BaseModel):
