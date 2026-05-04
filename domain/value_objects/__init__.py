@@ -16,3 +16,9 @@ from .issues import (
 from .last_push import LastPush
 from .stars import Stars, StarsHistoryPoint
 from .watchers import Watchers, WatchersHistoryPoint
+from .score import (
+    PopularityScore,
+    ActivityScore,
+    EngagementScore,
+    DemandScore
+)
