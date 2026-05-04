@@ -1,2 +1,3 @@
 from .repository_history import RepositoryHistoryDTO
 from .cached_repository_history import CachedHistoryDTO
+from .analytic import RepositoryAnalyticsDTO
