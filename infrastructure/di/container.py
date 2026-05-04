@@ -10,6 +10,7 @@ from infrastructure.adapters import (
 from application.ports import (
     RepositoryHistoryPort,
     RepositoryHistoryStoragePort,
+    ScoreConfigPort
 )
 from application.services import (
     CachePolicy,
@@ -21,9 +22,14 @@ from application.services import (
 )
 from application.use_cases import (
     GetHistoryUseCase,
+    СountMetricsRepositoryUseCase
 )
-
-
+from domain.services import(
+    CountMetricsService, 
+    RepositoryScoringService,
+    ScoreConfig
+)
+from infrastructure.datasets.kaggle_provider import KaggleScoreConfigProvider
 
 class AppContainer:
     """Composition Root."""
@@ -66,6 +72,19 @@ class AppContainer:
             cutoff_filter=self.history_cutoff_filter(),
         )
 
+    def score_config_provider(self) -> ScoreConfigPort:
+        return KaggleScoreConfigProvider(
+            csv_path=self._score_dataset_path,
+            percentile=0.99,
+        )
+    
+    def count_metrics_service(self) -> CountMetricsService:
+        return CountMetricsService()
+    
+    def scoring_service(self) -> RepositoryScoringService:
+        score_config = self.score_config_provider().get_config()
+        return RepositoryScoringService(config=score_config)
+    
     def cache_policy(self) -> CachePolicy:
         return CachePolicy(
             ttl=timedelta(seconds=settings.HISTORY_CACHE_TTL_SECONDS),
@@ -74,4 +93,10 @@ class AppContainer:
     def get_history_use_case(self) -> GetHistoryUseCase:
         return GetHistoryUseCase(
             service=self.history_service(),
+        )   
+    
+    def analytics_use_case(self) -> СountMetricsRepositoryUseCase:
+        return СountMetricsRepositoryUseCase(
+            count_metrics_service = self.count_metrics_service(),
+            scoring_service = self.scoring_service(),
         )
