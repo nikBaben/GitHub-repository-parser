@@ -342,9 +342,7 @@ class PlotlyAnalyticsDashboardPlotter:
 
         figure.update_xaxes(showgrid=True, domain=cls.CHART_X_DOMAIN)
         figure.update_yaxes(showgrid=True, rangemode="tozero")
-        figure.update_layout(
-            **cls._chart_axis_updates(initial_chart),
-        )
+        figure.update_layout(cls._chart_axis_updates(initial_chart))
 
         return figure
 
