@@ -4,7 +4,7 @@ from infrastructure.github.config import settings
 from infrastructure.github.clients.client import GitHubClient
 from infrastructure.di.container import AppContainer
 from application.queries.queries import GetHistoryQuery
-
+from presentation.mappers import RepositoryDashboardMapper
 
 async def main() -> None:
     async with GitHubClient(settings.TOKEN) as github_client:
@@ -12,6 +12,8 @@ async def main() -> None:
 
         get_history_use_case = container.get_history_use_case()
         analytics_use_case = container.analytics_use_case()
+        dashboard_render = container.repository_dashboard_renderer()
+
         query = GetHistoryQuery(
             url=settings.GITHUB_URL,
             days=settings.DAYS
@@ -25,6 +27,17 @@ async def main() -> None:
         print("\n=== ANALYTICS ===")
         print(analytics.model_dump(mode="json"))
 
+        dashboard = RepositoryDashboardMapper.to_view_model(
+            history=history,
+            analytics=analytics,
+            bucket="week",
+        )
+
+        dashboard_render.show(dashboard)
+        dashboard_render.save_html(
+            dashboard=dashboard,
+            filepath="repository_analytics_dashboard.html",
+        )
 
 
 if __name__ == "__main__":
