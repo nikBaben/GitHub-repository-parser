@@ -11,16 +11,20 @@ async def main() -> None:
         container = AppContainer(github_client)
 
         get_history_use_case = container.get_history_use_case()
-
+        analytics_use_case = container.analytics_use_case()
         query = GetHistoryQuery(
             url=settings.GITHUB_URL,
             days=settings.DAYS
         )
 
         history = await get_history_use_case.execute(query)
-
+        analytics = analytics_use_case.execute(history)
         print("=== HISTORY ===")
         print(history.model_dump(mode="json"))
+
+        print("\n=== ANALYTICS ===")
+        print(analytics.model_dump(mode="json"))
+
 
 
 if __name__ == "__main__":
