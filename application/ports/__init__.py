@@ -1,2 +1,3 @@
 from .repository_history_port import RepositoryHistoryPort
 from .repository_history_storage_port import RepositoryHistoryStoragePort
+from .score_config_port import ScoreConfigPort
