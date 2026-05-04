@@ -30,6 +30,9 @@ from domain.services import(
     ScoreConfig
 )
 from infrastructure.datasets.kaggle_provider import KaggleScoreConfigProvider
+from presentation.renders import PlotlyRepositoryDashboardRenderer
+from presentation.mappers import HistoryChartMapper
+from presentation.ports import RepositoryDashboardRendererPort
 
 class AppContainer:
     """Composition Root."""
@@ -94,9 +97,14 @@ class AppContainer:
         return GetHistoryUseCase(
             service=self.history_service(),
         )   
-    
+
     def analytics_use_case(self) -> СountMetricsRepositoryUseCase:
         return СountMetricsRepositoryUseCase(
             count_metrics_service = self.count_metrics_service(),
             scoring_service = self.scoring_service(),
         )
+    
+    def repository_dashboard_renderer(self) -> RepositoryDashboardRendererPort:
+        return PlotlyRepositoryDashboardRenderer() 
+
+    
