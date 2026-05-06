@@ -6,6 +6,7 @@ from infrastructure.di.container import AppContainer
 from application.queries.queries import GetHistoryQuery
 from presentation.mappers import RepositoryDashboardMapper
 
+
 async def main() -> None:
     async with GitHubClient(settings.TOKEN) as github_client:
         container = AppContainer(github_client)

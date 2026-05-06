@@ -1,0 +1,13 @@
+.git
+.gitignore
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.venv
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+.env
+repository_analytics_dashboard.html
+

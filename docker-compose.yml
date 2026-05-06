@@ -1,0 +1,7 @@
+services:
+  repository-parser:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
