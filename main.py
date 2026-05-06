@@ -17,7 +17,6 @@ async def main() -> None:
 
         query = GetHistoryQuery(
             url=settings.GITHUB_URL,
-            days=settings.DAYS
         )
 
         history = await get_history_use_case.execute(query)
