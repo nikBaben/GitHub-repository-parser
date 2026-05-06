@@ -26,10 +26,7 @@ dev = [
 
 [tool.setuptools.packages.find]
 include = [
-    "application*",
-    "domain*",
-    "infrastructure*",
-    "presentation*",
+    "parser*",
 ]
 
 [tool.ruff]

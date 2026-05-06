@@ -1,10 +1,10 @@
 import asyncio
 
-from infrastructure.github.config import settings
-from infrastructure.github.clients.client import GitHubClient
-from infrastructure.di.container import AppContainer
-from application.queries.queries import GetHistoryQuery
-from presentation.mappers import RepositoryDashboardMapper
+from parser.infrastructure.github.config import settings
+from parser.infrastructure.github.clients.client import GitHubClient
+from parser.infrastructure.di.container import AppContainer
+from parser.application.queries.queries import GetHistoryQuery
+from parser.presentation.mappers import RepositoryDashboardMapper
 
 
 async def main() -> None:
