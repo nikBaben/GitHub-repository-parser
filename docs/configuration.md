@@ -6,7 +6,7 @@
 Класс настроек находится в:
 
 ```text
-infrastructure/github/config.py
+parser/infrastructure/github/config.py
 ```
 
 ## Пример `.env` 

@@ -14,9 +14,9 @@
 Основные файлы:
 
 ```text
-domain/services/repository_metrics_service.py
-domain/services/score_metrics_service.py
-infrastructure/datasets/kaggle_provider.py
+parser/domain/services/repository_metrics_service.py
+parser/domain/services/score_metrics_service.py
+parser/infrastructure/datasets/kaggle_provider.py
 ```
 
 ## CountMetricsService
@@ -78,4 +78,3 @@ is_fork
 ```
 
 Если какой-то колонки нет, приложение выбросит ошибку при построении score config.
-

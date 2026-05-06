@@ -8,22 +8,22 @@ GitHub API, Plotly, Docker или способа хранения кэша.
 ```mermaid
 flowchart TD
     Main["main.py"] --> Container["AppContainer"]
-    Container --> HistoryUseCase["GetHistoryUseCase"]
-    Container --> AnalyticsUseCase["CountMetricsRepositoryUseCase"]
-    HistoryUseCase --> HistoryService["HistoryService"]
-    HistoryService --> Cache["HistoryCacheService"]
-    HistoryService --> Loader["HistoryLoader"]
-    Cache --> Storage["JsonHistoryStorageAdapter"]
-    Loader --> GitHubAdapter["GitHubRepositoryHistoryAdapter"]
-    GitHubAdapter --> GitHubClient["GitHubClient"]
+    Container --> HistoryUseCase["parser.application / GetHistoryUseCase"]
+    Container --> AnalyticsUseCase["parser.application / CountMetricsRepositoryUseCase"]
+    HistoryUseCase --> HistoryService["parser.application / HistoryService"]
+    HistoryService --> Cache["parser.application / HistoryCacheService"]
+    HistoryService --> Loader["parser.application / HistoryLoader"]
+    Cache --> Storage["parser.infrastructure / JsonHistoryStorageAdapter"]
+    Loader --> GitHubAdapter["parser.infrastructure / GitHubRepositoryHistoryAdapter"]
+    GitHubAdapter --> GitHubClient["parser.infrastructure / GitHubClient"]
     GitHubClient --> GitHub["GitHub REST API"]
-    AnalyticsUseCase --> Metrics["CountMetricsService"]
-    AnalyticsUseCase --> Scoring["RepositoryScoringService"]
-    Scoring --> Dataset["KaggleScoreConfigProvider"]
-    Metrics --> AnalyticsDTO["RepositoryAnalyticsDTO"]
+    AnalyticsUseCase --> Metrics["parser.domain / CountMetricsService"]
+    AnalyticsUseCase --> Scoring["parser.domain / RepositoryScoringService"]
+    Scoring --> Dataset["parser.infrastructure / KaggleScoreConfigProvider"]
+    Metrics --> AnalyticsDTO["parser.application / RepositoryAnalyticsDTO"]
     Scoring --> AnalyticsDTO
-    AnalyticsDTO --> DashboardMapper["RepositoryDashboardMapper"]
-    DashboardMapper --> Renderer["PlotlyRepositoryDashboardRenderer"]
+    AnalyticsDTO --> DashboardMapper["parser.presentation / RepositoryDashboardMapper"]
+    DashboardMapper --> Renderer["parser.presentation / PlotlyRepositoryDashboardRenderer"]
     Renderer --> HTML["repository_analytics_dashboard.html"]
 ```
 
@@ -42,11 +42,11 @@ flowchart TD
 ## Направление зависимостей
 
 Код верхних сценариев зависит от интерфейсов и доменных моделей, а внешние детали
-вынесены в `infrastructure` и `presentation`.
+вынесены в `parser.infrastructure` и `parser.presentation`.
 
 ```text
-domain <- application <- infrastructure
-domain <- application <- presentation
+parser.domain <- parser.application <- parser.infrastructure
+parser.domain <- parser.application <- parser.presentation
 ```
 
 Это позволяет:
@@ -54,11 +54,11 @@ domain <- application <- presentation
 - заменить GitHub adapter без переписывания доменной логики;
 - заменить JSON-кэш на другой storage;
 - заменить Plotly renderer на другой способ отображения;
-- тестировать application/domain отдельно от внешних API.
+- тестировать `parser.application` и `parser.domain` отдельно от внешних API.
 
 ## Роли слоев
 
-### `domain`
+### `parser.domain`
 
 Знает, что такое репозиторий, история, метрики и score.
 
@@ -69,7 +69,7 @@ domain <- application <- presentation
 - как строится HTML;
 - как запускается приложение.
 
-### `application`
+### `parser.application`
 
 Описывает сценарии использования:
 
@@ -78,7 +78,7 @@ domain <- application <- presentation
 - обновить устаревшие данные;
 - посчитать аналитику.
 
-### `infrastructure`
+### `parser.infrastructure`
 
 Содержит конкретные технические реализации:
 
@@ -88,7 +88,7 @@ domain <- application <- presentation
 - чтение Kaggle CSV;
 - сборка зависимостей в `AppContainer`.
 
-### `presentation`
+### `parser.presentation`
 
 Отвечает за финальное представление результата:
 
@@ -118,4 +118,3 @@ data/json/{owner}/{repo}/{period}.json
 - где хранить историю;
 - откуда брать score config;
 - каким renderer строить dashboard.
-

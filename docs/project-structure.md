@@ -2,32 +2,33 @@
 
 ```text
 Repository-Parser/
-  application/
-    dto/
-    ports/
-    queries/
-    services/
-    use_cases/
+  parser/
+    application/
+      dto/
+      ports/
+      queries/
+      services/
+      use_cases/
 
-  domain/
-    entities/
-    services/
-    value_objects/
-    utils.py
+    domain/
+      entities/
+      services/
+      value_objects/
+      utils.py
 
-  infrastructure/
-    adapters/
-    datasets/
-    di/
-    github/
+    infrastructure/
+      adapters/
+      datasets/
+      di/
+      github/
 
-  presentation/
-    chart/
-    mappers/
-    plotters/
-    ports/
-    renders/
-    view_models/
+    presentation/
+      chart/
+      mappers/
+      plotters/
+      ports/
+      renders/
+      view_models/
 
   data/
     csv/kaggle/
@@ -40,7 +41,7 @@ Repository-Parser/
   .env.example
 ```
 
-## `application`
+## `parser/application`
 
 Слой сценариев приложения.
 
@@ -50,7 +51,7 @@ Repository-Parser/
 - `services/` - сервисы загрузки, кэширования, merge и фильтрации истории.
 - `use_cases/` - use cases для получения истории и расчета аналитики.
 
-## `domain`
+## `parser/domain`
 
 Слой бизнес-логики.
 
@@ -59,7 +60,7 @@ Repository-Parser/
 - `services/` - расчет метрик и скоринга.
 - `utils.py` - функции нормализации score.
 
-## `infrastructure`
+## `parser/infrastructure`
 
 Слой внешних зависимостей.
 
@@ -68,7 +69,7 @@ Repository-Parser/
 - `di/` - composition root.
 - `github/` - HTTP-клиент, endpoints, queries, mappers.
 
-## `presentation`
+## `parser/presentation`
 
 Слой подготовки результата.
 
@@ -83,4 +84,3 @@ Repository-Parser/
 
 - `data/csv/kaggle/github_repos.csv` - датасет для настройки скоринга.
 - `data/json/` - runtime-кэш истории. Создается автоматически.
-

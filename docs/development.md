@@ -26,12 +26,12 @@ pytest
 
 ```text
 GitHub API
-  -> infrastructure adapter
-  -> domain history/value object
-  -> application DTO
+  -> parser.infrastructure adapter
+  -> parser.domain history/value object
+  -> parser.application DTO
   -> CountMetricsService
   -> RepositoryScoringService, если метрика влияет на score
-  -> presentation mapper
+  -> parser.presentation mapper
   -> dashboard view model
   -> Plotly dashboard
 ```
@@ -42,5 +42,4 @@ GitHub API
 2. Добавить метод в `HistoryChartMapper`.
 3. Добавить `RepositoryDashboardMetricViewModel` в `RepositoryDashboardMapper`.
 4. Проверить, что Plotly dashboard корректно переключает новую метрику.
-
 

@@ -66,6 +66,7 @@ python main.py
 
 ```text
 main.py                  точка входа
+parser/                  основной пакет приложения
 pyproject.toml           зависимости проекта
 Dockerfile               Docker-образ
 docker-compose.yml       запуск через Docker Compose
